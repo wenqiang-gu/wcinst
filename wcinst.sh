@@ -25,7 +25,7 @@ wcinst-init(){
     echo -e "Would you like to download wcdo.sh now ([y]/n)? "
     read use_wcdo_download
     if [ "$use_wcdo_download" = "y" ] || ["$use_wcdo_download" = ""];then
-      wget https://www.phy.bnl.gov/~wgu/protodune/wcinst/wcdo.sh
+      wget https://raw.githubusercontent.com/WireCell/wire-cell-singularity/master/wcdo.sh
       export PATH=$(pwd):$PATH
       chmod +x wcdo.sh
     else
@@ -134,8 +134,10 @@ wcinst-bootstrap(){
  export PKG_CONFIG_PATH=$SPDLOG_PC_DEST:$PKG_CONFIG_PATH
  replace-spdlog-pkgconfig
 
+ goto $wcdo_wct_dev
+ git submodule init; git submodule update # checkout data
  wcdo-ups-wct-configure-source
- ./wcb -p --notests install
+ ./wcb -p --notests --install-config=pdsp install
  setup wirecell wctdev -q e19:prof
  wcdo-wirecell-path default
  echo
