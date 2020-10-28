@@ -14,9 +14,9 @@ replace-spdlog-pkgconfig(){
 wcinst-icarus-init(){
 
   # https://cdcvs.fnal.gov/redmine/projects/larwirecell/repository
-  larsoft_version=v08_55_01
-  larwirecell_version=v08_12_15
-  icaruscode_version=v08_55_01
+  larsoft_version=v09_05_00
+  larwirecell_version=v09_01_02
+  icaruscode_version=v09_05_00
   sl7img=
 
   # download wcdo.sh
@@ -127,7 +127,7 @@ wcinst-icarus-bootstrap(){
  path-prepend $wcdo_ups_products PRODUCTS
  wcdo-mrb-init
  wcdo-mrb-add-source larwirecell $larwirecell_version $larwirecell_version
- # wcdo-mrb-add-source  icaruscode $icaruscode_version  $icaruscode_version
+ wcdo-mrb-add-source  icaruscode $icaruscode_version  $icaruscode_version
  wcdo-ups-declare wirecell wctdev
  setup wirecell wctdev -q e19:prof
 
@@ -137,6 +137,7 @@ wcinst-icarus-bootstrap(){
 
  goto $wcdo_wct_dev
  git submodule init; git submodule update # checkout data
+ export JSONNET_FQ_DIR=/home/wgu/Git/jsonnet/install
  wcdo-ups-wct-configure-source
  ./wcb -p --notests --install-config=icarus install
  setup wirecell wctdev -q e19:prof
@@ -197,6 +198,7 @@ mrbsetenv
 mrbslp
 export FHICL_FILE_PATH=\$WIRECELL_PATH:\$FHICL_FILE_PATH
 export PKG_CONFIG_PATH=$SPDLOG_PC_DEST:\$PKG_CONFIG_PATH
+export JSONNET_FQ_DIR=/data1/wgu/singularity/jsonnet/install
 
 find-fhicl(){
   fhicl_file=\$1
